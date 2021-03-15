@@ -1,8 +1,8 @@
 import './App.css';
 
-import HomePage from './homepage.component';
+import HomePage from './pages/homepage.component';
 
-import './homepage.styles.scss';
+import './pages/homepage.styles.scss';
 
 function App() {
   return <div className="App">
