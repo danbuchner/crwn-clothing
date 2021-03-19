@@ -8,7 +8,7 @@
  * March 19,2021
  */
 
-import {comnbineReducers} from 'redux';
+import {combineReducers} from 'redux';
 
 import userReducer from './user/user.reducer';
 
