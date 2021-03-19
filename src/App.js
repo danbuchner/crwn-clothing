@@ -8,7 +8,7 @@ import ShopPage from './pages/shop/shop.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component'
 import Header from './components/header/header.component';
 
-import {auth} from './firebase/firebase.utils';
+import {auth, createUserProfileDocument} from './firebase/firebase.utils';
 
 class App extends React.Component {
   constructor(){
@@ -22,10 +22,35 @@ class App extends React.Component {
   unsubscribeFromAuth = null;
 
   componentDidMount(){
-    this.unsubscribeFromAuth = auth.onAuthStateChanged( user => {
-      this.setState ({currentUser: user});
+    
+    this.unsubscribeFromAuth = auth.onAuthStateChanged( async userAuth => {
+      // userAuth - Getting back an authenticated user object
+      if(userAuth){
+        // calling the method to see if the snapshot from db has changed
+        // with new data for the user
+        const userRef = await createUserProfileDocument(userAuth);
 
-      console.log(user);
+        userRef.onSnapshot(snapShot => {
+          /* DocumentSnapshot is retrieved from documentReference
+            - allow to check if document exists by calling the .exists property
+            - .data() method, returns a JSON with the actual properties
+               #we don't get any data until we call the .data() method#
+          */
+          this.setState({
+            currentUser: {
+              id: snapShot.id,
+              ...snapShot.data()
+            }
+          }, () => {
+            console.log('State: ',this.state)}
+            )
+        });
+        
+      }else{
+        // When the user logout the code will set the currentUser to null
+        // in this case userAuth will be null
+        this.setState({currentUser: userAuth});
+      }      
     });   
   }
 
