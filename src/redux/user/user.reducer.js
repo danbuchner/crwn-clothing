@@ -3,10 +3,11 @@
  * A reducer it's a function that have two properties state and action
  * Action is an object with properties type and payload
  */
+import { UserActionTypes } from './user.types';
 
 // Sets a initial state
 const INITIAL_STATE = {
-    currentUser : null
+    currentUser: null
 }
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -14,7 +15,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
     // state - is the properties passed when the action gets fired
 
     switch(action.type){
-        case 'SET_CURRENT_USER':
+        case UserActionTypes.SET_CURRENT_USER:
             // when setting the current user state
             return{
                 ...state,
@@ -22,6 +23,6 @@ const userReducer = (state = INITIAL_STATE, action) => {
             };
         default: return state;
     }
-}
+};
 
 export default userReducer;

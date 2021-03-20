@@ -3,7 +3,9 @@
  * Each object is in the correct format that the action is expecting to be
  */
 
+import { UserActionTypes } from './user.types';
+
 export const setCurrentUser = user => ({
-    type: 'SET_CURRENT_USER',
+    type: UserActionTypes.SET_CURRENT_USER,
     payload: user
 })
